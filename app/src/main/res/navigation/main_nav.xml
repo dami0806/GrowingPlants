@@ -1,6 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
-             xmlns:app="http://schemas.android.com/apk/res-auto"
-             android:id="@+id/main_nav">
-
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_nav"
+    app:startDestination="@id/calenderFragment2">
+    <fragment
+        android:id="@+id/todoFragment2"
+        android:name="com.dami.growingplants.TodoFragment"
+        android:label="fragment_todo"
+        tools:layout="@layout/fragment_todo" >
+        <action
+            android:id="@+id/action_todoFragment2_to_calenderFragment2"
+            app:destination="@id/calenderFragment2" />
+    </fragment>
+    <fragment
+        android:id="@+id/calenderFragment2"
+        android:name="com.dami.growingplants.CalenderFragment"
+        android:label="fragment_calender"
+        tools:layout="@layout/fragment_calender" >
+        <action
+            android:id="@+id/action_calenderFragment2_to_todoFragment2"
+            app:destination="@id/todoFragment2" />
+    </fragment>
 </navigation>

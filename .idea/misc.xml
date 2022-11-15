@@ -3,8 +3,11 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Users/dami0/GrowingPlants/app/src/main/res/layout/activity_home.xml" value="0.1125" />
+        <entry key="..\:/Users/dami0/GrowingPlants/app/src/main/res/layout/activity_home.xml" value="0.1" />
         <entry key="..\:/Users/dami0/GrowingPlants/app/src/main/res/layout/activity_main.xml" value="0.1" />
+        <entry key="..\:/Users/dami0/GrowingPlants/app/src/main/res/layout/bottom_nav_tab.xml" value="0.1" />
+        <entry key="..\:/Users/dami0/GrowingPlants/app/src/main/res/layout/fragment_calender.xml" value="0.16" />
+        <entry key="..\:/Users/dami0/GrowingPlants/app/src/main/res/layout/fragment_todo.xml" value="0.2" />
       </map>
     </option>
   </component>
