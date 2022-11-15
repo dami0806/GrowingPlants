@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "389462601514",
+    "project_id": "growingplants-2462f",
+    "storage_bucket": "growingplants-2462f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:389462601514:android:58a17347b9a8f0db8f3853",
+        "android_client_info": {
+          "package_name": "com.dami.growingplants"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "389462601514-lo0aaf99m0a0dq9nn8r5ji7n69298np2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAppWkEKPbifMPVwqhgnNDczr7nOzMCV7Q"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "389462601514-lo0aaf99m0a0dq9nn8r5ji7n69298np2.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
