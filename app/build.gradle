@@ -72,7 +72,11 @@ dependencies {
     implementation 'androidx.navigation:navigation-ui-ktx:2.5.1'
 /*    //noinspection GradleCompatible
     implementation 'com.android.support:design:28.0.0'*/
+<<<<<<< HEAD
     implementation 'com.google.firebase:firebase-storage-ktx:20.0.1'
+=======
+
+>>>>>>> #1_Tap
     implementation 'androidx.viewpager2:viewpager2:1.0.0'
     implementation "com.kakao.sdk:v2-user:2.0.1"
 }

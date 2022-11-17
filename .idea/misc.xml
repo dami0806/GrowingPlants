@@ -9,8 +9,11 @@
         <entry key="..\:/Users/dami0/GrowingPlants/app/src/main/res/layout/activity_home.xml" value="0.2" />
         <entry key="..\:/Users/dami0/GrowingPlants/app/src/main/res/layout/activity_main.xml" value="0.1" />
         <entry key="..\:/Users/dami0/GrowingPlants/app/src/main/res/layout/bottom_nav_tab.xml" value="0.1" />
+<<<<<<< HEAD
         <entry key="..\:/Users/dami0/GrowingPlants/app/src/main/res/layout/calendar_cell.xml" value="0.25364583333333335" />
         <entry key="..\:/Users/dami0/GrowingPlants/app/src/main/res/layout/calender_shape.xml" value="0.2526041666666667" />
+=======
+>>>>>>> #1_Tap
         <entry key="..\:/Users/dami0/GrowingPlants/app/src/main/res/layout/fragment_calender.xml" value="0.16" />
         <entry key="..\:/Users/dami0/GrowingPlants/app/src/main/res/layout/fragment_todo.xml" value="0.2" />
       </map>
