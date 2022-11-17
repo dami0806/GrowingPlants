@@ -5,9 +5,6 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.ImageView
-import androidx.navigation.findNavController
 import com.dami.growingplants.R
 
 
@@ -24,13 +21,8 @@ class CalenderFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
-        val view = inflater.inflate(R.layout.fragment_calender,container,false)
-        view?.findViewById<ImageView>(R.id.TodoBtn)?.setOnClickListener {
-            it.findNavController().navigate(R.id.action_calenderFragment2_to_todoFragment2)
-        }
         // Inflate the layout for this fragment
-        return view
+        return inflater.inflate(R.layout.fragment_calender, container, false)
     }
 
 
