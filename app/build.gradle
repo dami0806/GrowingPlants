@@ -51,7 +51,7 @@ android {
 
 dependencies {
 
-    implementation 'com.github.kizitonwose:CalendarView:<latest-version>'
+
     // 카카오 SDK 모듈 설정
     implementation 'com.google.firebase:firebase-database-ktx'
     /* implementation "com.kakao.sdk:v2-user:2.5.2" // 카카오 로그인*/
