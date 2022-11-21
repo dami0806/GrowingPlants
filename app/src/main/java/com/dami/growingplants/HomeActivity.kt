@@ -80,7 +80,6 @@ class HomeActivity : AppCompatActivity() {
             adapter.notifyDataSetChanged()
             FBRef.todoDate
                 .child(dateTV.text.toString())
-                .child(key)
                 .removeValue()
 
         }
