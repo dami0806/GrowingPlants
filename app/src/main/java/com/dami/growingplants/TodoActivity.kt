@@ -3,9 +3,15 @@ package com.dami.growingplants
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.util.SparseBooleanArray
 import android.widget.ArrayAdapter
 import android.widget.ImageView
+import android.widget.Toast
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.ValueEventListener
+import com.kakao.sdk.user.UserApiClient
 import kotlinx.android.synthetic.main.activity_todo.*
 
 class TodoActivity : AppCompatActivity() {
@@ -28,9 +34,39 @@ class TodoActivity : AppCompatActivity() {
                 itemlist.add(editText.text.toString())
                 listView.adapter =  adapter
                 adapter.notifyDataSetChanged()
-                // This is because every time when you add the item the input space or the eidt text space will be cleared
+
                 editText.text.clear()
-            }
+
+                //FB에 넣기
+                UserApiClient.instance.me { user, error ->
+                   /* val title = binding.titleArea.text.toString()
+                    val content = binding.contentArea.text.toString()
+                    val user = user!!.kakaoAccount!!.email
+                    val time = KakaoAuth.getTime()
+val key = FBRef.boardRef.push().key.toString() //이미지이름에 쓰려고 먼저 키값 받아옴
+
+                    if(isImgUpload==true){
+                        // binding.imgArea.visibility= View.VISIBLE
+                        imgUpload(key)}
+                    /*   Log.d(TAG,title)
+                Log.d(TAG,content)*/
+
+                    */
+
+                    //board - key - boardModel(데이터 title,content,uid,time)
+                    val key = FBRef.todoDate.push().key.toString() //이미지이름에 쓰려고 먼저 키값 받아옴
+                    FBRef.todoDate
+                        .child(key)
+                        .setValue("날짜넣을거임")
+                   
+
+
+                }
+
+
+                }
+
+
             // Clear버튼 클릭
             clear.setOnClickListener {
 
@@ -66,5 +102,8 @@ class TodoActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
+
     }
+
+
 }
