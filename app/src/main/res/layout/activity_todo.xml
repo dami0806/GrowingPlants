@@ -10,7 +10,7 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="650dp">
 
         <TextView
             android:id="@+id/textView"
@@ -30,30 +30,37 @@
             android:hint="Add an Item"
             android:textColorHint="@color/black"
             android:textColor="@color/black"/>
+
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
             android:id="@+id/linearLayout1"
-            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
             android:layout_below="@id/editText"
-            android:padding="10dp">
+            android:orientation="horizontal"
+            android:padding="5dp">
+
             <Button
                 android:id="@+id/add"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Add"/>
+                android:layout_weight="1"
+                android:text="Add" />
+
             <Button
                 android:id="@+id/delete"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Delete"
-                android:layout_marginLeft="70dp"/>
+                android:layout_marginLeft="70dp"
+                android:layout_weight="1"
+                android:text="Delete" />
+
             <Button
                 android:id="@+id/clear"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Clear"
-                android:layout_marginLeft="60dp"/>
+                android:layout_marginLeft="60dp"
+                android:layout_weight="1"
+                android:text="Clear" />
         </LinearLayout>
 
         <TextView
@@ -72,7 +79,7 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_below="@id/textView1"
-            android:choiceMode="multipleChoice"/>
+            android:choiceMode="multipleChoice" />
 
     </RelativeLayout>
 
@@ -125,7 +132,5 @@
                 android:layout_weight="1"
                 android:layout_margin="10dp"/>
         </LinearLayout>
-
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 </LinearLayout>
