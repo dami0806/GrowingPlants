@@ -3,6 +3,7 @@ package com.dami.growingplants
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.util.SparseBooleanArray
 import android.widget.ArrayAdapter
 import android.widget.ImageView
@@ -19,7 +20,7 @@ class HomeActivity : AppCompatActivity() {
     lateinit var toDoBtn:ImageView
     lateinit var dateTV: TextView
     lateinit var calendarView: CalendarView
-lateinit var Date:String
+    private lateinit var key: String
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
@@ -29,12 +30,12 @@ lateinit var Date:String
                 dateTV = findViewById(R.id.idTVDate)
                 calendarView = findViewById(R.id.calendarView)
                 calendarView
+
                     .setOnDateChangeListener(
                         OnDateChangeListener { view, year, month, dayOfMonth ->
 
                             val Date = (dayOfMonth.toString() + "-"
                                     + (month + 1) + "-" + year)
-
                             // set this date in TextView for Display
                             dateTV.setText(Date)
                         })
@@ -48,40 +49,27 @@ lateinit var Date:String
 
         // add버튼 클릭
         add.setOnClickListener {
+
+            //
             itemlist.add(editText.text.toString())
             listView.adapter =  adapter
             adapter.notifyDataSetChanged()
 
-            editText.text.clear()
+           var et= editText.text.toString()
 
             //FB에 넣기
             UserApiClient.instance.me { user, error ->
-                /* val title = binding.titleArea.text.toString()
-                 val content = binding.contentArea.text.toString()
-                 val user = user!!.kakaoAccount!!.email
-                 val time = KakaoAuth.getTime()
-val key = FBRef.boardRef.push().key.toString() //이미지이름에 쓰려고 먼저 키값 받아옴
 
-                 if(isImgUpload==true){
-                     // binding.imgArea.visibility= View.VISIBLE
-                     imgUpload(key)}
-                 /*   Log.d(TAG,title)
-             Log.d(TAG,content)*/
+               key = FBRef.todoDate.push().key.toString() //이미지이름에 쓰려고 먼저 키값 받아옴
 
-                 */
-
-                //board - key - boardModel(데이터 title,content,uid,time)
-                val key = FBRef.todoDate.push().key.toString() //이미지이름에 쓰려고 먼저 키값 받아옴
                 FBRef.todoDate
-                    .cihld(Date)
+                    .child(dateTV.text.toString())
                     .child(key)
-                    .setValue("날짜넣을거임")
-
-
+                    .setValue(et)
 
             }
 
-
+            editText.text.clear()
         }
 
 
@@ -90,6 +78,11 @@ val key = FBRef.boardRef.push().key.toString() //이미지이름에 쓰려고 �
 
             itemlist.clear()
             adapter.notifyDataSetChanged()
+            FBRef.todoDate
+                .child(dateTV.text.toString())
+                .child(key)
+                .removeValue()
+
         }
         //
         listView.setOnItemClickListener { adapterView, view, i, l ->
@@ -109,6 +102,14 @@ val key = FBRef.boardRef.push().key.toString() //이미지이름에 쓰려고 �
             }
             position.clear()
             adapter.notifyDataSetChanged()
+
+            FBRef.todoDate
+                .child(dateTV.text.toString())
+                .child(key)
+                .removeValue()
+
+
+
         }
 
         //Tap
