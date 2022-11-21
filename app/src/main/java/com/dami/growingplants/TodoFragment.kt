@@ -25,10 +25,10 @@ class TodoFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
 
-        val view = inflater.inflate(R.layout.fragment_todo, container, false)
+      /*  val view = inflater.inflate(R.layout.fragment_todo, container, false)
         view?.findViewById<ImageView>(R.id.CalBtn)?.setOnClickListener {
             it.findNavController().navigate(R.id.action_todoFragment2_to_calenderFragment2)
-        }
+        }*/
         return view
     }
 
