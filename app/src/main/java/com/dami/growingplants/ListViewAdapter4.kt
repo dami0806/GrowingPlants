@@ -35,10 +35,7 @@ class ListViewAdapter4 (val List : MutableList<String>) : BaseAdapter() {
         }
 
         val title = convertView!!.findViewById<TextView>(R.id.listviewItemText)
-
         title.text = List[position]
-
-
         return convertView!!
 
     }
