@@ -5,11 +5,8 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.util.SparseBooleanArray
-import android.widget.ArrayAdapter
-import android.widget.ImageView
-import android.widget.CalendarView
+import android.widget.*
 import android.widget.CalendarView.OnDateChangeListener
-import android.widget.TextView
 import com.kakao.sdk.user.UserApiClient
 import kotlinx.android.synthetic.main.activity_todo.*
 import java.util.*
@@ -21,6 +18,7 @@ class HomeActivity : AppCompatActivity() {
     lateinit var dateTV: TextView
     lateinit var calendarView: CalendarView
     private lateinit var key: String
+    val list_item = mutableListOf<String>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
@@ -42,16 +40,21 @@ class HomeActivity : AppCompatActivity() {
         var itemlist = arrayListOf<String>()
         var adapter = ArrayAdapter<String>(this,
             android.R.layout.simple_list_item_multiple_choice
-            , itemlist)
+            , list_item)
 
+        val listview = findViewById<ListView>(R.id.listView)
+        val listviewAdapter = ListViewAdapter4(list_item)
+        listview.adapter = listviewAdapter
 
 
         // add버튼 클릭
         add.setOnClickListener {
 
-            //
+            list_item.add(editText.text.toString())
             itemlist.add(editText.text.toString())
-            listView.adapter =  adapter
+            //listView.adapter =  adapter
+
+            listviewAdapter.notifyDataSetChanged()
             adapter.notifyDataSetChanged()
 
            var et= editText.text.toString()
