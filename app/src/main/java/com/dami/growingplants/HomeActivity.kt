@@ -34,8 +34,7 @@ class HomeActivity : AppCompatActivity() {
                     .setOnDateChangeListener(
                         OnDateChangeListener { view, year, month, dayOfMonth ->
 
-                            val Date = (dayOfMonth.toString() + "-"
-                                    + (month + 1) + "-" + year)
+                            val Date = (year.toString() + "년" + (month + 1).toString()+"월"+dayOfMonth.toString())
                             // set this date in TextView for Display
                             dateTV.setText(Date)
                         })
