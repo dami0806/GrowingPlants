@@ -22,10 +22,11 @@ class HomeActivity : AppCompatActivity() {
     lateinit var dateTV: TextView
     lateinit var calendarView: CalendarView
     private lateinit var key: String
-    private var commentDataList = mutableListOf<String>()
-private lateinit var listviewAdapter:ListViewAdapter4
 
+private lateinit var listviewAdapter:ListViewAdapter4
     val list_item = mutableListOf<String>()
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
@@ -37,7 +38,8 @@ private lateinit var listviewAdapter:ListViewAdapter4
                 calendarView.setOnDateChangeListener(
                         OnDateChangeListener { view, year, month, dayOfMonth ->
 
-                            val Date = (year.toString() + "년" + (month + 1).toString()+"월"+dayOfMonth.toString())
+                            val Date = (year.toString() + "년 " + (month + 1).toString()+"월 "+dayOfMonth.toString()+"일")
+
                             // set this date in TextView for Display
                             dateTV.setText(Date)
                         })
