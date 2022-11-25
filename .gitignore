@@ -13,4 +13,4 @@
 .externalNativeBuild
 .cxx
 local.properties
-GlobalApplication.kt
+.GlobalApplication.kt
