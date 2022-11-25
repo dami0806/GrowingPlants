@@ -63,8 +63,16 @@ class HomeActivity : AppCompatActivity() {
         listviewAdapter = ListViewAdapter4(list_item)
         listview.adapter = listviewAdapter
 
+        add.setOnClickListener {
+        addTask()}
+        clear.setOnClickListener {
+        clearBtn()}
 
-        addTask()
+        listview.setOnItemClickListener { parent, view, position, id ->
+
+
+
+        }
 
 
 
@@ -84,9 +92,10 @@ class HomeActivity : AppCompatActivity() {
 
         }
 
+
     }
 fun addTask(){
-   add.setOnClickListener {
+
        list_itemText.clear()
          Log.d("비교", dateTV.text.toString())
          list_item.add(editText.text.toString())
@@ -105,10 +114,38 @@ fun addTask(){
          }
 
          editText.text.clear()
-     }
+
 }
+    fun deleteTask(){
+
+        list_itemText.clear()
+
+        //FB에 넣기
+        UserApiClient.instance.me { user, error ->
+            fbkey = FBRef.todoDate.push().key.toString() //이미지이름에 쓰려고 먼저 키값 받아옴
+            FBRef.todoDate
+                .child(user!!.id.toString())
+                .child(dateTV.text.toString())
+                .removeValue()
+
+        }
 
 
+
+    }
+    fun clearBtn(){
+        list_item.clear()
+        listviewAdapter.notifyDataSetChanged()
+        UserApiClient.instance.me { user, error ->
+
+            FBRef.todoDate
+                .child(user!!.id.toString())
+                .child(dateTV.text.toString())
+                .removeValue()
+        }
+        getCommentData(dateTV.text.toString())
+        listviewAdapter.notifyDataSetChanged()//어댑터 동기화
+    }
 fun getCommentData(date: String) {
 //comment 아래 board아래 commentkey 아래 comment 데이터들
   val postListener = object : ValueEventListener {
