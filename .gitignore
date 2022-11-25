@@ -13,4 +13,4 @@
 .externalNativeBuild
 .cxx
 local.properties
-.GlobalApplication.kt
+/src/main/java/com/dami/growingplants/GlobalApplication.kt
