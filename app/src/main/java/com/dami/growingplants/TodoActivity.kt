@@ -15,68 +15,152 @@ import com.google.firebase.database.ValueEventListener
 import com.kakao.sdk.user.UserApiClient
 import kotlinx.android.synthetic.main.activity_home.*
 import kotlinx.android.synthetic.main.activity_todo.*
+import kotlinx.android.synthetic.main.listview_item.*
+import kotlinx.android.synthetic.main.listview_item.view.*
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
 class TodoActivity : AppCompatActivity() {
-    lateinit var calBtn:ImageView
-    lateinit var toDoBtn:ImageView
+    lateinit var calBtn: ImageView
+    lateinit var toDoBtn: ImageView
+    lateinit var editText: EditText
     private lateinit var listviewAdapter: ListViewAdapter4
-    val items = mutableListOf<ListViewModel>()
 
-    lateinit var dateTV: String
+    lateinit var add: Button
+    lateinit var clear: Button
+    lateinit var delete: Button
+    var d:String?=null
     val list_item = mutableListOf<String>()
-
+    var textList = arrayListOf<String>()
+    val list_itemkey = mutableListOf<String>()
+    private lateinit var key: String
+    private lateinit var idkey: ArrayList<String>
+    private var checkmarkIdList = mutableListOf<String>()
+    var count:Int =0
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_todo)
-        calBtn = findViewById(R.id.CalBtn)
-        toDoBtn = findViewById(R.id.TodoBtn)
-
 
         val listview = findViewById<ListView>(R.id.listView)
-        listviewAdapter = ListViewAdapter4(list_item)
-        listview.adapter = listviewAdapter
-
+        calBtn = findViewById(R.id.CalBtn)
+        toDoBtn = findViewById(R.id.TodoBtn)
+        clear = findViewById(R.id.clear)
+        delete = findViewById(R.id.delete)
+        add = findViewById(R.id.add)
         val current = LocalDateTime.now()
         val formatter = DateTimeFormatter.ofPattern("yyyy년 MM월 dd일")
-        val  dateTV= current.format(formatter).toString()
-        Log.d("왕",dateTV.toString())
+        val dateTV = current.format(formatter).toString()
+
+        key = intent.getStringExtra("dateKey").toString()
+
+        editText = findViewById(R.id.editText)
+        listviewAdapter = ListViewAdapter4(list_item)
+       // listviewAdapter = ListViewAdapter4(list_itemkey)
+        listview.adapter = listviewAdapter
         getCommentData(dateTV)
+        TextData(dateTV)
+        listview.setOnItemClickListener { parent, view, position, id ->
+            Log.d("화긴",list_item[position])
+            Log.d("화긴",position.toString())
+            Log.d("담담3", textList.toString())
+            val postListener = object : ValueEventListener {
+                override fun onDataChange(dataSnapshot: DataSnapshot) {
+                    //list_item.clear()
+                    count =0
+                    for (dataModel in dataSnapshot.children) {
+                        //position번째
+
+                        if(count==position){
 
 
+                            //true 로 바꾸기
+                            UserApiClient.instance.me { user, error ->
+                                FBRef.todoDate
+                                    .child(user!!.id.toString())
+                                    .child(dateTV.toString())
+                                    .child(list_itemkey[position])
+                                   .setValue(ListViewModel(textList[position],true))
 
+                            }
+                            break
+//true는 check로
 
+                        listviewAdapter.notifyDataSetChanged()
+                    }
+                        count++
+                    }
+                }
+                override fun onCancelled(databaseError: DatabaseError) {
+                }
+            }
+            UserApiClient.instance.me { user, error ->
+                FBRef.todoDate.child(user!!.id.toString())
+                    .child(dateTV)
+                    .addValueEventListener(postListener)
+            }
+//title이 같은애들일때 check로 바뀜
 
-
-        toDoBtn.setOnClickListener {
 
         }
+
+        clear.setOnClickListener { clearBtn()}
+        delete.setOnClickListener {  }
+
+        //checkmarkData()
+
+
+        //탭
+        toDoBtn.setOnClickListener {
+        }
         calBtn.setOnClickListener {
-            var intent = Intent(this,HomeActivity::class.java)
+            var intent = Intent(this, HomeActivity::class.java)
             intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
             startActivity(intent)
-
         }
     }
 
 
+
+
+
+
+fun clearBtn(){
+
+
+       // list_item.clear()
+        listviewAdapter.notifyDataSetChanged()
+        UserApiClient.instance.me { user, error ->
+
+        FBRef.todoDate
+            .child(user!!.id.toString())
+            .child(key)
+            .removeValue()
+
+
+}
+    getCommentData(key)
+}
+
+
+
+
+
+//오늘날짜 todolist에 가져오기
     fun getCommentData(date:String) {
 //comment 아래 board아래 commentkey 아래 comment 데이터들
         val postListener = object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 list_item.clear()
+                list_itemkey.clear()
                 for (dataModel in dataSnapshot.children) {
                     if (date == dataModel.key) {
-                        Log.d("확인1", date.toString())
 
-
-                        Log.d("확인", dataModel.key.toString())
-                        Log.d("확인list", list_item.toString())
                         for (i in dataModel.children) {
-                            Log.d("확인list2", i.value.toString())
+
                             list_item.add(i.value.toString())
+                            list_itemkey.add(i.key.toString())
+                            Log.d("뭘가요",list_item.toString())
                         }
                     }
                     listviewAdapter.notifyDataSetChanged()//어댑터 동기화
@@ -87,87 +171,41 @@ class TodoActivity : AppCompatActivity() {
         }
         UserApiClient.instance.me { user, error ->
             FBRef.todoDate.child(user!!.id.toString())
-
                 .addValueEventListener(postListener)
         }
     }
+
+
+fun TextData(dateTV:String) {
+    val postListener = object : ValueEventListener {
+        override fun onDataChange(dataSnapshot: DataSnapshot) {
+
+            for (dataModel in dataSnapshot.children) {
+
+
+                for (i in dataModel.children) {
+                    //Log.d("담담",i.value.toString())
+                    Log.d("담담", i.toString())
+                    if (i.key == "text") {
+                        Log.d("담담1", i.value.toString())
+                        textList.add(i.value.toString())
+
+                    }
+                }
+                Log.d("담담2", textList.toString())
+            }
+
+        }
+
+        override fun onCancelled(databaseError: DatabaseError) {
+        }
+    }
+    UserApiClient.instance.me { user, error ->
+        FBRef.todoDate
+            .child(user!!.id.toString())
+            .child(dateTV)
+            .addValueEventListener(postListener)
 }
 
-
-         /*   var itemlist = arrayListOf<String>()
-            var adapter = ArrayAdapter<String>(this,
-                android.R.layout.simple_list_item_multiple_choice
-                , itemlist)
-
-
-
-            // add버튼 클릭
-            add.setOnClickListener {
-                itemlist.add(editText.text.toString())
-                listView.adapter =  adapter
-                adapter.notifyDataSetChanged()
-
-                editText.text.clear()
-
-                //FB에 넣기
-                UserApiClient.instance.me { user, error ->
-                   */// val title = binding.titleArea.text.toString()
-// val content = binding.contentArea.text.toString()
-// val user = user!!.kakaoAccount!!.email
-// val time = KakaoAuth.getTime()
-// val key = FBRef.boardRef.push().key.toString() //이미지이름에 쓰려고 먼저 키값 받아옴
-//
-// if(isImgUpload==true){
-// // binding.imgArea.visibility= View.VISIBLE
-// imgUpload(key)}
-// /*   Log.d(TAG,title)
-// Log.d(TAG,content)*//*
-//
-// *//*
-//
-// //board - key - boardModel(데이터 title,content,uid,time)
-// val key = FBRef.todoDate.push().key.toString() //이미지이름에 쓰려고 먼저 키값 받아옴
-// FBRef.todoDate
-// .child(key)
-// .setValue("날짜넣을거임")
-//
-//
-//
-// }
-//
-//
-// }
-//
-//
-// // Clear버튼 클릭
-// clear.setOnClickListener {
-//
-// itemlist.clear()
-// adapter.notifyDataSetChanged()
-// }
-// //
-// listView.setOnItemClickListener { adapterView, view, i, l ->
-// android.widget.Toast.makeText(this, "You Selected the item --> "+itemlist.get(i), android.widget.Toast.LENGTH_SHORT).show()
-// }
-// // 삭제버튼 클릭
-// delete.setOnClickListener {
-// val position: SparseBooleanArray = listView.checkedItemPositions
-// val count = listView.count
-// var item = count - 1
-// while (item >= 0) {
-// if (position.get(item))
-// {
-// adapter.remove(itemlist.get(item))
-// }
-// item--
-// }
-// position.clear()
-// adapter.notifyDataSetChanged()
-// }
-//
-//
-//Tap
-
-
-
-
+}
+}

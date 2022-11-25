@@ -18,7 +18,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:padding="10dp"
-            android:text="식물이 TodoList"
+            android:text="오늘의 TodoList"
             android:textColor="@color/black"
             android:textSize="26dp" />
 
