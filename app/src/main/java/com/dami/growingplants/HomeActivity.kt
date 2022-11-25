@@ -33,8 +33,8 @@ class HomeActivity : AppCompatActivity() {
     var keyList = ArrayList<String>()
     var d:String?=null
     val list_item = mutableListOf<String>()
-
-
+    val list_itemtext = mutableListOf<String>()
+    var textList = arrayListOf<String>()
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -55,6 +55,7 @@ class HomeActivity : AppCompatActivity() {
                 dateTV.setText(Datetext)
                 Log.d("테텥ㄱ",getDateData(dateTV.text.toString()).toString()) //글의 날짜정보 가져옴
                 getCommentData(dateTV.text.toString())
+
             })
 
 
@@ -63,11 +64,6 @@ class HomeActivity : AppCompatActivity() {
         listview.adapter = listviewAdapter
 
 
-        /* val current = LocalDateTime.now()
-        val formatter = DateTimeFormatter.ofPattern("yyyy년 MM월 dd일")
-        val  dateTV= current.format(formatter).toString()*/
-
-        Log.d("왕", dateTV.toString())
         addTask()
 
 
@@ -94,7 +90,9 @@ fun addTask(){
        list_itemText.clear()
          Log.d("비교", dateTV.text.toString())
          list_item.add(editText.text.toString())
+
          var et = editText.text.toString()
+       Log.d("보기",et.toString())
          //FB에 넣기
          UserApiClient.instance.me { user, error ->
              fbkey = FBRef.todoDate.push().key.toString() //이미지이름에 쓰려고 먼저 키값 받아옴
@@ -116,6 +114,7 @@ fun getCommentData(date: String) {
   val postListener = object : ValueEventListener {
       override fun onDataChange(dataSnapshot: DataSnapshot) {
           list_item.clear()
+          list_itemtext.clear()
           for (dataModel in dataSnapshot.children) {
               if (date == dataModel.key) {
 
@@ -126,9 +125,15 @@ fun getCommentData(date: String) {
                       //  Log.d("확인인",i.getValue(ListViewModel::class.java).toString())
                       list_item.add(i.value.toString())
                       keyList.add(i.key.toString())
+                      for (j in i.children) {
 
-                  }
-              }
+                          Log.d("확인list3", j.value.toString())
+                          if(j.key.toString().contains("text=")){
+                              list_itemtext.add(j.key.toString())
+                          }
+                      }
+
+                  }}
               listviewAdapter.notifyDataSetChanged()//어댑터 동기화
           }
       }
@@ -167,4 +172,37 @@ fun getDateData(dateData:String): String? {
           .addValueEventListener(postListener) }
 return d
 }
+    fun TextData(dateTV:String) {
+        val postListener = object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+
+                for (dataModel in dataSnapshot.children) {
+
+
+                    for (i in dataModel.children) {
+                        //Log.d("담담",i.value.toString())
+                        Log.d("담담", i.toString())
+                        if (i.key == "text") {
+                            Log.d("담담1", i.value.toString())
+                            textList.add(i.value.toString())
+
+                        }
+                    }
+                    Log.d("담담2", textList.toString())
+                }
+
+            }
+
+            override fun onCancelled(databaseError: DatabaseError) {
+            }
+        }
+        UserApiClient.instance.me { user, error ->
+            FBRef.todoDate
+                .child(user!!.id.toString())
+                .child(dateTV)
+                .addValueEventListener(postListener)
+        }
+
+    }
+
 }

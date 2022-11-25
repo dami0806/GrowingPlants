@@ -32,6 +32,7 @@ class TodoActivity : AppCompatActivity() {
     var d:String?=null
     val list_item = mutableListOf<String>()
     var textList = arrayListOf<String>()
+    var checkList = arrayListOf<String>()
     val list_itemkey = mutableListOf<String>()
     private lateinit var key: String
     private lateinit var idkey: ArrayList<String>
@@ -73,8 +74,8 @@ class TodoActivity : AppCompatActivity() {
 
                         if(count==position){
 
-
                             //true 로 바꾸기
+                            if(checkList[position]=="false"){
                             UserApiClient.instance.me { user, error ->
                                 FBRef.todoDate
                                     .child(user!!.id.toString())
@@ -82,7 +83,17 @@ class TodoActivity : AppCompatActivity() {
                                     .child(list_itemkey[position])
                                    .setValue(ListViewModel(textList[position],true))
 
-                            }
+                            }}
+                            //false 로 바꾸기
+                            if(checkList[position]=="true"){
+                            UserApiClient.instance.me { user, error ->
+                                FBRef.todoDate
+                                    .child(user!!.id.toString())
+                                    .child(dateTV.toString())
+                                    .child(list_itemkey[position])
+                                    .setValue(ListViewModel(textList[position],false))
+
+                            }}
                             break
 //true는 check로
 
@@ -189,6 +200,11 @@ fun TextData(dateTV:String) {
                     if (i.key == "text") {
                         Log.d("담담1", i.value.toString())
                         textList.add(i.value.toString())
+
+                    }
+                    if (i.key == "click") {
+                        Log.d("담담1", i.value.toString())
+                       checkList.add(i.value.toString())
 
                     }
                 }
