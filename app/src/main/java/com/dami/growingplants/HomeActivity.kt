@@ -160,7 +160,7 @@ fun getCommentData(date: String) {
                       Log.d("확인list2", i.key.toString())
                       //val item = i.getValue(ListViewModel::class.java)
                       //  Log.d("확인인",i.getValue(ListViewModel::class.java).toString())
-                      list_item.add(i.value.toString())
+                      list_item.add(i.getValue(ListViewModel::class.java)!!.text.toString())
                       keyList.add(i.key.toString())
                       for (j in i.children) {
 

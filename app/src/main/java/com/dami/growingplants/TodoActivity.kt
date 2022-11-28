@@ -169,7 +169,7 @@ fun clearBtn(){
 
                         for (i in dataModel.children) {
 
-                            list_item.add(i.value.toString())
+                            list_item.add(i.getValue(ListViewModel::class.java)!!.text.toString())
                             list_itemkey.add(i.key.toString())
                             Log.d("뭘가요",list_item.toString())
                         }
@@ -197,17 +197,19 @@ fun TextData(dateTV:String) {
                 for (i in dataModel.children) {
                     //Log.d("담담",i.value.toString())
                     Log.d("담담", i.toString())
-                    if (i.key == "text") {
-                        Log.d("담담1", i.value.toString())
-                        textList.add(i.value.toString())
+
+                    var item = dataModel.value
+                    var itemText = dataModel.getValue(ListViewModel::class.java)!!.text.toString()
+                    var itemClick =dataModel.getValue(ListViewModel::class.java)!!.click .toString()
+                    Log.d("이거", item.toString())
+                    Log.d("이거11", itemText)
+                    Log.d("이거11", itemClick)
+
+                    textList.add(itemText)
+                    checkList.add(itemClick)
 
                     }
-                    if (i.key == "click") {
-                        Log.d("담담1", i.value.toString())
-                       checkList.add(i.value.toString())
 
-                    }
-                }
                 Log.d("담담2", textList.toString())
             }
 
