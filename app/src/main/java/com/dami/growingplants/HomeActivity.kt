@@ -13,6 +13,7 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
 import com.kakao.sdk.user.UserApiClient
 import kotlinx.android.synthetic.main.activity_todo.*
+import kotlinx.android.synthetic.main.listview_item.*
 import java.time.format.DateTimeFormatter
 import java.util.*
 import kotlin.collections.ArrayList
@@ -32,9 +33,11 @@ class HomeActivity : AppCompatActivity() {
     val list_itemText = arrayListOf<String>()
     var keyList = ArrayList<String>()
     var d:String?=null
-    val list_item = mutableListOf<String>()
+    val list_item = mutableListOf<ListViewModel>()
     val list_itemtext = mutableListOf<String>()
     var textList = arrayListOf<String>()
+    lateinit var add: ImageView
+
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,7 +47,7 @@ class HomeActivity : AppCompatActivity() {
         toDoBtn = findViewById(R.id.TodoBtn)
         dateTV = findViewById(R.id.idTVDate)
         calendarView = findViewById(R.id.calendarView)
-
+add = findViewById(R.id.add)
         calendarView.setOnDateChangeListener(
             OnDateChangeListener { view, year, month, dayOfMonth ->
 
@@ -63,7 +66,7 @@ class HomeActivity : AppCompatActivity() {
         listviewAdapter = ListViewAdapter4(list_item)
         listview.adapter = listviewAdapter
 
-        add.setOnClickListener {
+       add.setOnClickListener {
         addTask()}
         clear.setOnClickListener {
         clearBtn()}
@@ -98,7 +101,9 @@ fun addTask(){
 
        list_itemText.clear()
          Log.d("비교", dateTV.text.toString())
-         list_item.add(editText.text.toString())
+         list_item.add(ListViewModel(editText.text.toString(),"false"))
+
+
 
          var et = editText.text.toString()
        Log.d("보기",et.toString())
@@ -109,7 +114,7 @@ fun addTask(){
                  .child(user!!.id.toString())
                  .child(dateTV.text.toString())
                  .push()
-                 .setValue(ListViewModel(et,false))
+                 .setValue(ListViewModel(et,"false"))
              list_itemText.add(et)
          }
 
@@ -160,7 +165,7 @@ fun getCommentData(date: String) {
                       Log.d("확인list2", i.key.toString())
                       //val item = i.getValue(ListViewModel::class.java)
                       //  Log.d("확인인",i.getValue(ListViewModel::class.java).toString())
-                      list_item.add(i.getValue(ListViewModel::class.java)!!.text.toString())
+                      list_item.add(i.getValue(ListViewModel::class.java)!!)
                       keyList.add(i.key.toString())
                       for (j in i.children) {
 

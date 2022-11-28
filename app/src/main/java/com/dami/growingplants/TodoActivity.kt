@@ -26,11 +26,11 @@ class TodoActivity : AppCompatActivity() {
     lateinit var editText: EditText
     private lateinit var listviewAdapter: ListViewAdapter4
 
-    lateinit var add: Button
+    lateinit var add: ImageView
     lateinit var clear: Button
     lateinit var delete: Button
     var d:String?=null
-    val list_item = mutableListOf<String>()
+    val list_item = mutableListOf<ListViewModel>()
     var textList = arrayListOf<String>()
     var checkList = arrayListOf<String>()
     val list_itemkey = mutableListOf<String>()
@@ -57,14 +57,13 @@ class TodoActivity : AppCompatActivity() {
 
         editText = findViewById(R.id.editText)
         listviewAdapter = ListViewAdapter4(list_item)
-       // listviewAdapter = ListViewAdapter4(list_itemkey)
+
         listview.adapter = listviewAdapter
         getCommentData(dateTV)
         TextData(dateTV)
         listview.setOnItemClickListener { parent, view, position, id ->
-            Log.d("화긴",list_item[position])
-            Log.d("화긴",position.toString())
-            Log.d("담담3", textList.toString())
+            var listposition = checkList[position]
+            var textposition = textList[position]
             val postListener = object : ValueEventListener {
                 override fun onDataChange(dataSnapshot: DataSnapshot) {
                     //list_item.clear()
@@ -72,34 +71,36 @@ class TodoActivity : AppCompatActivity() {
                     for (dataModel in dataSnapshot.children) {
                         //position번째
 
-                        if(count==position){
+                        Log.d("뭘까1",listposition.toString())
+                        Log.d("뭘까2",position.toString())
 
+                        if(listposition.contains("true")){
+                            UserApiClient.instance.me { user, error ->
+                                FBRef.todoDate
+                                    .child(user!!.id.toString())
+                                    .child(dateTV.toString())
+                                    .child(list_itemkey[position])
+                                    .setValue(ListViewModel(textposition,click = "false"))
+                                checkList[position] = "false"
+                            }}
                             //true 로 바꾸기
-                            if(checkList[position]=="false"){
+                            if(listposition.contains("false")){
                             UserApiClient.instance.me { user, error ->
                                 FBRef.todoDate
                                     .child(user!!.id.toString())
                                     .child(dateTV.toString())
                                     .child(list_itemkey[position])
-                                   .setValue(ListViewModel(textList[position],true))
+                                   .setValue(ListViewModel(textposition,click = "true"))
+                                checkList[position] = "true"
+                                listviewAdapter.notifyDataSetChanged()
 
                             }}
-                            //false 로 바꾸기
-                            if(checkList[position]=="true"){
-                            UserApiClient.instance.me { user, error ->
-                                FBRef.todoDate
-                                    .child(user!!.id.toString())
-                                    .child(dateTV.toString())
-                                    .child(list_itemkey[position])
-                                    .setValue(ListViewModel(textList[position],false))
 
-                            }}
-                            break
+
+
 //true는 check로
 
-                        listviewAdapter.notifyDataSetChanged()
-                    }
-                        count++
+
                     }
                 }
                 override fun onCancelled(databaseError: DatabaseError) {
@@ -169,7 +170,7 @@ fun clearBtn(){
 
                         for (i in dataModel.children) {
 
-                            list_item.add(i.getValue(ListViewModel::class.java)!!.text.toString())
+                            list_item.add(i.getValue(ListViewModel::class.java)!!)
                             list_itemkey.add(i.key.toString())
                             Log.d("뭘가요",list_item.toString())
                         }
@@ -200,7 +201,7 @@ fun TextData(dateTV:String) {
 
                     var item = dataModel.value
                     var itemText = dataModel.getValue(ListViewModel::class.java)!!.text.toString()
-                    var itemClick =dataModel.getValue(ListViewModel::class.java)!!.click .toString()
+                    var itemClick =dataModel.getValue(ListViewModel::class.java)!!.click.toString()
                     Log.d("이거", item.toString())
                     Log.d("이거11", itemText)
                     Log.d("이거11", itemClick)

@@ -1,5 +1,6 @@
 package com.dami.growingplants
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,7 +9,7 @@ import android.widget.Checkable
 import android.widget.ImageView
 import android.widget.TextView
 
-class ListViewAdapter4(val List: MutableList<String>) : BaseAdapter() {
+class ListViewAdapter4(val List: MutableList<ListViewModel>) : BaseAdapter() {
 
     override fun getCount(): Int {
         return List.size
@@ -32,14 +33,17 @@ class ListViewAdapter4(val List: MutableList<String>) : BaseAdapter() {
         }
 
         val title = convertView!!.findViewById<TextView>(R.id.title)
+        val click = convertView!!.findViewById<TextView>(R.id.click)
         val checkimg = convertView!!.findViewById<ImageView>(R.id.checkimg)
-        title.text = List[position]
+        title.text = List[position].text
+        click.text= List[position].click
+        Log.d("적용",click.text.toString())
 
-        checkimg.setImageResource(R.drawable.nocheck)
-        if(title.text.contains("true")){
+        if(click.text.toString()=="true"){
+
             checkimg.setImageResource(R.drawable.check)
         }
-        else if(title.text.contains("false")){
+        else if(click.text.toString()=="false"){
             checkimg.setImageResource(R.drawable.nocheck)
         }
 

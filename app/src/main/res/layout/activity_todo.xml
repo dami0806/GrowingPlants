@@ -40,14 +40,12 @@
             android:orientation="horizontal"
             android:padding="5dp">
 
-            <Button
+            <ImageView
                 android:id="@+id/add"
-                android:layout_width="wrap_content"
+                android:layout_width="100dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Add"
-                android:textColor="#000000"
-                android:backgroundTint="#01C576"/>
+              android:src="@drawable/img"/>
 
             <Button
                 android:id="@+id/delete"
