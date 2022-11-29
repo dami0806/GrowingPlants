@@ -60,19 +60,17 @@ class TodoActivity : AppCompatActivity() {
 
         listview.adapter = listviewAdapter
         getCommentData(dateTV)
-        TextData(dateTV)
+
+
         listview.setOnItemClickListener { parent, view, position, id ->
             var listposition = checkList[position]
             var textposition = textList[position]
-            val postListener = object : ValueEventListener {
-                override fun onDataChange(dataSnapshot: DataSnapshot) {
-                    //list_item.clear()
-                    count =0
-                    for (dataModel in dataSnapshot.children) {
-                        //position번째
 
-                        Log.d("뭘까1",listposition.toString())
-                        Log.d("뭘까2",position.toString())
+            val postListener = object : ValueEventListener {
+
+                override fun onDataChange(dataSnapshot: DataSnapshot) {
+
+                    for (dataModel in dataSnapshot.children) {
 
                         if(listposition.contains("true")){
                             UserApiClient.instance.me { user, error ->
@@ -82,7 +80,12 @@ class TodoActivity : AppCompatActivity() {
                                     .child(list_itemkey[position])
                                     .setValue(ListViewModel(textposition,click = "false"))
                                 checkList[position] = "false"
-                            }}
+
+                            }
+                            listviewAdapter.notifyDataSetChanged()
+                            break
+                        }
+
                             //true 로 바꾸기
                             if(listposition.contains("false")){
                             UserApiClient.instance.me { user, error ->
@@ -92,9 +95,13 @@ class TodoActivity : AppCompatActivity() {
                                     .child(list_itemkey[position])
                                    .setValue(ListViewModel(textposition,click = "true"))
                                 checkList[position] = "true"
-                                listviewAdapter.notifyDataSetChanged()
 
-                            }}
+
+                            }
+                                listviewAdapter.notifyDataSetChanged()
+                                break
+                            }
+
 
 
 
@@ -113,14 +120,9 @@ class TodoActivity : AppCompatActivity() {
             }
 //title이 같은애들일때 check로 바뀜
 
-
         }
 
         clear.setOnClickListener { clearBtn()}
-        delete.setOnClickListener {  }
-
-        //checkmarkData()
-
 
         //탭
         toDoBtn.setOnClickListener {
@@ -136,27 +138,18 @@ class TodoActivity : AppCompatActivity() {
 
 
 
-
 fun clearBtn(){
 
-
-       // list_item.clear()
         listviewAdapter.notifyDataSetChanged()
         UserApiClient.instance.me { user, error ->
-
         FBRef.todoDate
             .child(user!!.id.toString())
             .child(key)
             .removeValue()
 
-
 }
     getCommentData(key)
 }
-
-
-
-
 
 //오늘날짜 todolist에 가져오기
     fun getCommentData(date:String) {
@@ -170,9 +163,12 @@ fun clearBtn(){
 
                         for (i in dataModel.children) {
 
-                            list_item.add(i.getValue(ListViewModel::class.java)!!)
+                            list_item.add(ListViewModel(i.getValue(ListViewModel::class.java)!!.text.toString(),i.getValue(ListViewModel::class.java)!!.click.toString()) )
                             list_itemkey.add(i.key.toString())
+                            textList.add(i.getValue(ListViewModel::class.java)!!.text.toString())
+                            checkList.add(i.getValue(ListViewModel::class.java)!!.click.toString())
                             Log.d("뭘가요",list_item.toString())
+
                         }
                     }
                     listviewAdapter.notifyDataSetChanged()//어댑터 동기화
@@ -188,44 +184,5 @@ fun clearBtn(){
     }
 
 
-fun TextData(dateTV:String) {
-    val postListener = object : ValueEventListener {
-        override fun onDataChange(dataSnapshot: DataSnapshot) {
-
-            for (dataModel in dataSnapshot.children) {
-
-
-                for (i in dataModel.children) {
-                    //Log.d("담담",i.value.toString())
-                    Log.d("담담", i.toString())
-
-                    var item = dataModel.value
-                    var itemText = dataModel.getValue(ListViewModel::class.java)!!.text.toString()
-                    var itemClick =dataModel.getValue(ListViewModel::class.java)!!.click.toString()
-                    Log.d("이거", item.toString())
-                    Log.d("이거11", itemText)
-                    Log.d("이거11", itemClick)
-
-                    textList.add(itemText)
-                    checkList.add(itemClick)
-
-                    }
-
-                Log.d("담담2", textList.toString())
-            }
-
-        }
-
-        override fun onCancelled(databaseError: DatabaseError) {
-        }
-    }
-    UserApiClient.instance.me { user, error ->
-        FBRef.todoDate
-            .child(user!!.id.toString())
-            .child(dateTV)
-            .addValueEventListener(postListener)
-}
-
-}
 
 }

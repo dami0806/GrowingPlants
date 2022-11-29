@@ -40,7 +40,6 @@ class ListViewAdapter4(val List: MutableList<ListViewModel>) : BaseAdapter() {
         Log.d("적용",click.text.toString())
 
         if(click.text.toString()=="true"){
-
             checkimg.setImageResource(R.drawable.check)
         }
         else if(click.text.toString()=="false"){
