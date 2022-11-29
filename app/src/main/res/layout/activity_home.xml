@@ -56,7 +56,7 @@
     <LinearLayout
         android:id="@+id/linearLayout1"
         android:layout_width="match_parent"
-        android:layout_height="80dp"
+        android:layout_height="60dp"
         android:layout_below="@id/editText"
         android:orientation="horizontal"
         android:padding="5dp">
@@ -64,29 +64,19 @@
         <ImageView
             android:id="@+id/add"
             android:layout_width="100dp"
-            android:layout_height="wrap_content"
+            android:layout_height="60dp"
             android:layout_weight="1"
             android:src="@drawable/img"/>
 
-        <Button
-            android:id="@+id/delete"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="70dp"
-            android:layout_weight="1"
-            android:text="Delete"
-            android:textColor="#000000"
-            android:backgroundTint="#01C576"/>
 
-        <Button
+        <ImageView
             android:id="@+id/clear"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="60dp"
+            android:layout_width="100dp"
+            android:layout_height="50dp"
             android:layout_weight="1"
-            android:text="Clear"
-            android:textColor="#000000"
-            android:backgroundTint="#01C576"/>
+            android:src="@drawable/img_1"
+            android:paddingTop="5dp"/>
+
     </LinearLayout>
 
 
@@ -99,8 +89,8 @@
     <ListView
         android:id="@+id/listView"
         android:layout_width="wrap_content"
-        android:layout_height="100dp"
-
+        android:layout_height="200dp"
+        android:layout_marginBottom="64dp"
         android:choiceMode="multipleChoice" />
     </LinearLayout>
 </ScrollView>
