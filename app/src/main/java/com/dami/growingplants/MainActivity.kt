@@ -40,6 +40,7 @@ class MainActivity : AppCompatActivity() {
 
             }
         }
+
         val callback: (OAuthToken?, Throwable?) -> Unit = { token, error ->
             if (error != null) {
                 when {
