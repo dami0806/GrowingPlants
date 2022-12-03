@@ -5,7 +5,9 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".TodoActivity"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@drawable/img_7"
+    android:padding="20dp">
 
 
     <RelativeLayout
@@ -16,6 +18,8 @@
             android:id="@+id/textView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:fontFamily="@font/bm"
             android:gravity="center"
             android:padding="10dp"
             android:text="오늘의 TodoList"
@@ -23,6 +27,7 @@
             android:textSize="26dp" />
 
         <EditText
+            android:fontFamily="@font/bm"
             android:id="@+id/editText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -35,18 +40,10 @@
         <LinearLayout
             android:id="@+id/linearLayout1"
             android:layout_width="match_parent"
-            android:layout_height="80dp"
+            android:layout_height="5dp"
             android:layout_below="@id/editText"
             android:orientation="horizontal"
             android:padding="5dp">
-
-            <ImageView
-                android:id="@+id/add"
-                android:layout_width="100dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-              android:src="@drawable/img"/>
-
 
         </LinearLayout>
 
@@ -55,6 +52,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/linearLayout1"
+            android:fontFamily="@font/bm"
             android:gravity="center"
             android:padding="10dp"
             android:text="For my Plants"
@@ -66,7 +64,8 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_below="@id/textView1"
-            android:choiceMode="multipleChoice" />
+            android:choiceMode="multipleChoice"
+            android:fontFamily="@font/bm" />
 
     </RelativeLayout>
 

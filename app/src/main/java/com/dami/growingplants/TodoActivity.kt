@@ -44,7 +44,7 @@ class TodoActivity : AppCompatActivity() {
         calBtn = findViewById(R.id.CalBtn)
         toDoBtn = findViewById(R.id.TodoBtn)
         alarmBtn = findViewById(R.id.AlarmBtn)
-        add = findViewById(R.id.add)
+
         val current = LocalDateTime.now()
         val formatter = DateTimeFormatter.ofPattern("yyyy년 MM월 dd일")
         dateTV = current.format(formatter).toString()

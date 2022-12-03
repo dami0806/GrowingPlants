@@ -33,17 +33,34 @@ class AlarmActivity : AppCompatActivity() {
             this, AlarmReceiver.NOTIFICATION_ID, intent,
             PendingIntent.FLAG_UPDATE_CURRENT)
         var onetimeAlarmToggle: ToggleButton
-        var periodicAlarmToggle: ToggleButton
-        var exactPeriodicAlarmToggle: ToggleButton
+
         var realtimePeriodicAlarmToggle: ToggleButton
 
         realtimePeriodicAlarmToggle= findViewById(R.id.realtimePeriodicAlarmToggle)
+        onetimeAlarmToggle= findViewById(R.id.onetimeAlarmToggle)
 
         calBtn = findViewById(R.id.CalBtn)
         toDoBtn = findViewById(R.id.TodoBtn)
         alarmBtn = findViewById(R.id.AlarmBtn)
 
-
+//30분뒤 알리기
+        onetimeAlarmToggle.setOnCheckedChangeListener(CompoundButton.OnCheckedChangeListener { _, isChecked ->
+            val toastMessage = if (isChecked) {
+                val triggerTime = (SystemClock.elapsedRealtime()
+                        + 3 * 1000)
+                alarmManager.set(
+                    AlarmManager.ELAPSED_REALTIME_WAKEUP,
+                    triggerTime,
+                    pendingIntent
+                )
+                "30분뒤 알림을 보내요!"
+            } else {
+                alarmManager.cancel(pendingIntent)
+                "30분뒤 알림이 꺼졌어요"
+            }
+            Log.d(TAG, toastMessage)
+            Toast.makeText(this, toastMessage, Toast.LENGTH_SHORT).show()
+        })
 // realtimePeriodicAlarmToggle //6시마다 알리기
         realtimePeriodicAlarmToggle.setOnCheckedChangeListener(CompoundButton.OnCheckedChangeListener { _, isChecked ->
             val toastMessage: String = if (isChecked) {
