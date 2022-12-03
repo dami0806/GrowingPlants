@@ -2,13 +2,13 @@ package com.dami.growingplants
 
 import android.content.Intent
 import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.*
 import android.widget.CalendarView.OnDateChangeListener
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
@@ -17,7 +17,6 @@ import kotlinx.android.synthetic.main.activity_todo.*
 import kotlinx.android.synthetic.main.listview_item.*
 import java.time.format.DateTimeFormatter
 import java.util.*
-import kotlin.collections.ArrayList
 
 
 class HomeActivity : AppCompatActivity() {
@@ -35,12 +34,14 @@ class HomeActivity : AppCompatActivity() {
     val list_item = mutableListOf<ListViewModel>()
     val list_itemtext = mutableListOf<String>()
     var textList = arrayListOf<String>()
+    lateinit var dayOfMonthString:String
     lateinit var add: ImageView
     lateinit var clear: ImageView
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
+
 
         calBtn = findViewById(R.id.CalBtn)
         toDoBtn = findViewById(R.id.TodoBtn)
@@ -55,13 +56,18 @@ class HomeActivity : AppCompatActivity() {
         }
         calendarView.setOnDateChangeListener(
             OnDateChangeListener { view, year, month, dayOfMonth ->
+                dayOfMonthString = dayOfMonth.toString()
+                if(dayOfMonth<10){
+                    dayOfMonthString = "0"+ dayOfMonth.toString()
+                }
 
                 Datetext =
-                    (year.toString() + "년 " + (month + 1).toString() + "월 " + dayOfMonth.toString() + "일")
+                    (year.toString() + "년 " + (month + 1).toString() + "월 " + dayOfMonthString + "일")
 
                 // set this date in TextView for Display
                 dateTV.setText(Datetext)
-
+                Log.d("나오는수",dayOfMonthString)
+                Log.d("나오는수",dayOfMonth.toString())
                 getCommentData(dateTV.text.toString())
 
             })

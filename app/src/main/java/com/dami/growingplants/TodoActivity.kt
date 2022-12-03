@@ -48,7 +48,7 @@ class TodoActivity : AppCompatActivity() {
         val current = LocalDateTime.now()
         val formatter = DateTimeFormatter.ofPattern("yyyy년 MM월 dd일")
         dateTV = current.format(formatter).toString()
-
+            Log.d("시간",dateTV)
         key = intent.getStringExtra("dateKey").toString()
 
         editText = findViewById(R.id.editText)
