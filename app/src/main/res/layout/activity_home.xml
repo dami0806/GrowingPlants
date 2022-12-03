@@ -7,7 +7,7 @@
     tools:context=".HomeActivity"
     android:windowSoftInputMode="adjustResize"
     android:orientation="vertical"
-    android:background="@drawable/img_8"
+    android:background="@drawable/imgg_8"
     android:padding="20dp">
 
 
@@ -67,7 +67,7 @@
             android:layout_width="100dp"
             android:layout_height="60dp"
             android:layout_weight="1"
-            android:src="@drawable/img"/>
+            android:src="@drawable/background_plants"/>
 
 
         <ImageView
@@ -153,7 +153,7 @@
                 android:layout_margin="10dp"/>
             <ImageView
                 android:id="@+id/AlarmBtn"
-                android:src="@drawable/img_3"
+                android:src="@drawable/imgg_3"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
