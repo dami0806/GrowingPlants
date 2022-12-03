@@ -10,7 +10,7 @@ task wrapper(type: Wrapper) {
 }
 android {
     compileSdk 32
-
+    buildFeatures.viewBinding = true
     defaultConfig {
         applicationId "com.dami.growingplants"
         minSdk 21

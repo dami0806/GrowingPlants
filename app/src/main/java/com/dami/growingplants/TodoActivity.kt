@@ -24,6 +24,7 @@ import java.time.format.DateTimeFormatter
 class TodoActivity : AppCompatActivity() {
     lateinit var calBtn: ImageView
     lateinit var toDoBtn: ImageView
+    lateinit var alarmBtn: ImageView
     lateinit var editText: EditText
     private lateinit var listviewAdapter: ListViewAdapter4
     lateinit var add: ImageView
@@ -42,7 +43,7 @@ class TodoActivity : AppCompatActivity() {
         val listview = findViewById<ListView>(R.id.listView)
         calBtn = findViewById(R.id.CalBtn)
         toDoBtn = findViewById(R.id.TodoBtn)
-
+        alarmBtn = findViewById(R.id.AlarmBtn)
         add = findViewById(R.id.add)
         val current = LocalDateTime.now()
         val formatter = DateTimeFormatter.ofPattern("yyyy년 MM월 dd일")
@@ -68,6 +69,12 @@ class TodoActivity : AppCompatActivity() {
             var intent = Intent(this, HomeActivity::class.java)
             intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
             startActivity(intent)
+        }
+        alarmBtn.setOnClickListener {
+            var intent = Intent(this, AlarmActivity::class.java)
+            intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
+            startActivity(intent)
+
         }
     }
 

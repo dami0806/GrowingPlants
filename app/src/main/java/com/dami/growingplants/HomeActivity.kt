@@ -23,6 +23,7 @@ import kotlin.collections.ArrayList
 class HomeActivity : AppCompatActivity() {
     lateinit var calBtn: ImageView
     lateinit var toDoBtn: ImageView
+    lateinit var alarmBtn: ImageView
     lateinit var dateTV: TextView
     lateinit var calendarView: CalendarView
     private lateinit var key: String
@@ -43,6 +44,8 @@ class HomeActivity : AppCompatActivity() {
 
         calBtn = findViewById(R.id.CalBtn)
         toDoBtn = findViewById(R.id.TodoBtn)
+        alarmBtn = findViewById(R.id.AlarmBtn)
+
         dateTV = findViewById(R.id.idTVDate)
         calendarView = findViewById(R.id.calendarView)
         add = findViewById(R.id.add)
@@ -88,8 +91,14 @@ class HomeActivity : AppCompatActivity() {
         }
         calBtn.setOnClickListener {
 
-        }
 
+        }
+        alarmBtn.setOnClickListener {
+            var intent = Intent(this, AlarmActivity::class.java)
+            intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
+            startActivity(intent)
+
+        }
 
     }
     private fun removeList(position: Int) {
