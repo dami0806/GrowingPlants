@@ -7,7 +7,7 @@
     tools:context=".HomeActivity"
     android:windowSoftInputMode="adjustResize"
     android:orientation="vertical"
-    android:background="@drawable/imgg_8"
+    android:background="@drawable/imgg"
     android:padding="20dp">
 
 
@@ -67,15 +67,15 @@
             android:layout_width="100dp"
             android:layout_height="60dp"
             android:layout_weight="1"
-            android:src="@drawable/background_plants"/>
+            android:src="@drawable/add"/>
 
 
         <ImageView
             android:id="@+id/clear"
             android:layout_width="100dp"
-            android:layout_height="50dp"
+            android:layout_height="60dp"
             android:layout_weight="1"
-            android:src="@drawable/img_1"
+            android:src="@drawable/reset"
             android:paddingTop="5dp"/>
 
     </LinearLayout>

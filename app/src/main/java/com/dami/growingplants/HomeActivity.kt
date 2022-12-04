@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
+import android.view.animation.AnimationUtils
 import android.widget.*
 import android.widget.CalendarView.OnDateChangeListener
 import androidx.annotation.RequiresApi
@@ -77,6 +78,7 @@ class HomeActivity : AppCompatActivity() {
         listview.adapter = listviewAdapter
 
        add.setOnClickListener {
+
         addTask()}
 
 
@@ -165,6 +167,7 @@ class HomeActivity : AppCompatActivity() {
 
     }
 fun addTask(){
+
 
        list_itemText.clear()
          Log.d("비교", dateTV.text.toString())

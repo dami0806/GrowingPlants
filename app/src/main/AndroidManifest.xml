@@ -5,7 +5,7 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 
     <application
         android:name=".GlobalApplication"
@@ -20,16 +20,19 @@
         android:usesCleartextTraffic="true"
         tools:ignore="Instantiatable"
         tools:targetApi="31">
+        <activity
+            android:name=".SplashActivity"
+            android:exported="false" />
 
         <receiver
             android:name="com.dami.alarm.BootReceiver"
             android:enabled="true"
-            android:exported="true"></receiver>
-
+            android:exported="true" />
         <receiver
             android:name="com.dami.alarm.AlarmReceiver"
             android:enabled="true"
-            android:exported="true"></receiver>
+            android:exported="true" />
+
         <activity
             android:name=".AlarmActivity"
             android:exported="false" />

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<set xmlns:android="http://schemas.android.com/apk/res/android"
+    android:interpolator="@android:anim/linear_interpolator"
+    android:startOffset="1500">
+
+    <!--3.텍스트가 밑에서 위로 올라오기 색상 점점 보이기-->
+    <translate
+        android:fromYDelta="100%"
+        android:toYDelta="0%"
+        android:duration="600"/>
+
+    //색상
+    <alpha
+        android:fromAlpha="0.0"
+        android:toAlpha="1.0"
+        android:duration ="600"/>
+
+
+</set>

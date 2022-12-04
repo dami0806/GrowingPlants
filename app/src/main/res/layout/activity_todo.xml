@@ -6,7 +6,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".TodoActivity"
     android:orientation="vertical"
-    android:background="@drawable/background_plants"
+    android:background="@drawable/imgg"
     android:padding="20dp">
 
 

@@ -6,20 +6,35 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.kakao.sdk.common.util.Utility
 import android.util.Log
+import android.view.animation.Animation
+import android.view.animation.AnimationUtils
 import android.widget.ImageButton
+import android.widget.ImageView
 import android.widget.Toast
+import androidx.annotation.UiThread
 import com.kakao.sdk.auth.LoginClient
 
 
 import com.kakao.sdk.auth.model.OAuthToken
 import com.kakao.sdk.common.model.AuthErrorCause
 import com.kakao.sdk.user.UserApiClient
+import java.lang.Thread.sleep
 
 class MainActivity : AppCompatActivity() {
+    lateinit var title:ImageView
+    lateinit var p1:ImageView
+
+    lateinit var p3:ImageView
+    lateinit var p4:ImageView
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        title = findViewById(R.id.title)
+        p1 = findViewById(R.id.p1)
 
+        p3 = findViewById(R.id.p3)
+        p4 = findViewById(R.id.p4)
+        splashAnimation()
 
         val keyHash = Utility.getKeyHash(this)
         Log.d("해쉬", keyHash)
@@ -27,11 +42,11 @@ class MainActivity : AppCompatActivity() {
 
 
         // 로그인 정보 확인
-        UserApiClient.instance.accessTokenInfo { tokenInfo, error ->
+        /*    UserApiClient.instance.accessTokenInfo { tokenInfo, error ->
             if (error != null) {
-                Toast.makeText(this, "토큰 정보 보기 실패", Toast.LENGTH_SHORT).show()
+              //  Toast.makeText(this, "토큰 정보 보기 실패", Toast.LENGTH_SHORT).show()
             } else if (tokenInfo != null) {
-                Toast.makeText(this, "토큰 정보 보기 성공", Toast.LENGTH_SHORT).show()
+                //Toast.makeText(this, "토큰 정보 보기 성공", Toast.LENGTH_SHORT).show()
 
                 val intent = Intent(this, HomeActivity::class.java)
                 startActivity(intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP))
@@ -39,7 +54,7 @@ class MainActivity : AppCompatActivity() {
                 //로그인 건너뛰지 않게끔
 
             }
-        }
+        }*/
         val callback: (OAuthToken?, Throwable?) -> Unit = { token, error ->
             if (error != null) {
                 when {
@@ -85,13 +100,14 @@ class MainActivity : AppCompatActivity() {
         UserApiClient.instance.me { user, error ->
             if (error != null) {
                 Log.e(ContentValues.TAG, "사용자 정보 요청 실패", error)
-            }
-            else if (user != null) {
-                Log.i("탴", "사용자 정보 요청 성공" +
-                        "\n회원번호: ${user.id}" +
-                        "\n이메일: ${user.kakaoAccount?.email}" +
-                        "\n닉네임: ${user.kakaoAccount?.profile?.nickname}" +
-                        "\n프로필사진: ${user.kakaoAccount?.profile?.thumbnailImageUrl}")
+            } else if (user != null) {
+                Log.i(
+                    "탴", "사용자 정보 요청 성공" +
+                            "\n회원번호: ${user.id}" +
+                            "\n이메일: ${user.kakaoAccount?.email}" +
+                            "\n닉네임: ${user.kakaoAccount?.profile?.nickname}" +
+                            "\n프로필사진: ${user.kakaoAccount?.profile?.thumbnailImageUrl}"
+                )
             }
 
             //사용자 정보
@@ -101,14 +117,13 @@ class MainActivity : AppCompatActivity() {
             if (userId != null) {
                 intent.putExtra("user_id", userId.toLong()) //type: Long
                 startActivity(intent)
-                Log.d("이거2",userId.toString())
-            }
-            else {
-                Log.d("DEBUG","user info: null")
+                Log.d("이거2", userId.toString())
+            } else {
+                Log.d("DEBUG", "user info: null")
             }
 
         }
-        val kakao_login_button = findViewById<ImageButton>(R.id.kakao_login_button) // 로그인 버튼
+        val kakao_login_button = findViewById<ImageView>(R.id.kakao_login_button) // 로그인 버튼
         kakao_login_button.setOnClickListener {
             if (LoginClient.instance.isKakaoTalkLoginAvailable(this)) {
                 LoginClient.instance.loginWithKakaoTalk(this, callback = callback)
@@ -117,4 +132,34 @@ class MainActivity : AppCompatActivity() {
             }
         }
     }
+        @UiThread
+        private fun splashAnimation(){
+            val textAnim = AnimationUtils.loadAnimation(this,R.anim.anim_splash_textview)
+            title.startAnimation(textAnim)
+            val imageAnim = AnimationUtils.loadAnimation(this,R.anim.anim_splash_imageview)
+            p1.startAnimation(imageAnim)
+
+
+
+            p3.startAnimation(imageAnim)
+
+            p4.startAnimation(imageAnim)
+
+            imageAnim.setAnimationListener(object : Animation.AnimationListener{
+                override fun onAnimationEnd(animation: Animation?) {
+                    //startActivity(intent)
+                    overridePendingTransition(R.anim.anim_splash_out_top,R.anim.anim_splash_in_down)
+                    startActivity(intent)
+                }
+
+                override fun onAnimationStart(animation: Animation?) {
+
+                }
+
+                override fun onAnimationRepeat(animation: Animation?) {
+
+                }
+            })
+        }
+
 }
